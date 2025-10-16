@@ -1,9 +1,8 @@
 import COLORS from '@/configs/colors';
 import { useLocalSearchParams as UseLocalSearchParams } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import apiUrl from '../configs/api';
+import { FlatList, StyleSheet, View } from 'react-native';
+import { apiUrl } from '../configs/api';
 import ChaptersCard from "./components/ChaptersCard";
 import PageLoader from "./components/PageLoader";
 const Chapters = () => {
@@ -40,23 +39,27 @@ const Chapters = () => {
   }
 
   return (
-    <SafeAreaView style={[styles.container]}>
+    <View style={[styles.container]} >
       <PageLoader loading={loading} />
-      <View style={[styles.header]}>
+      {/* <View style={[styles.header]}>
         <Text style={[styles.title]}>Chapters</Text>
-      </View>
+      </View> */}
       <View style={[styles.body]}>
         <FlatList
           showsVerticalScrollIndicator={false}
           data={chapters}
           // refreshing={loading}
           // onRefresh={getChapatersByBookId}
+          contentContainerStyle={{
+            paddingTop: 0,
+            paddingBottom: 10,
+          }}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => <ChaptersCard item={item} />}
         />
 
       </View>
-    </SafeAreaView>
+    </View>
   )
 }
 
@@ -70,7 +73,7 @@ const styles = StyleSheet.create({
   title: {
     color: COLORS.textPrimary,
     fontSize: 18,
-    // fontWeight:'bold',
+    fontWeight: '500',
     textAlign: 'center',
     marginTop: 10,
     padding: 10,
@@ -79,6 +82,12 @@ const styles = StyleSheet.create({
   body: {
     backgroundColor: COLORS.backgroundLight,
     flex: 1,
-    padding: 10,
+    // padding: 10,
+    paddingHorizontal: 10,
+    paddingBottom: 10,
   },
+  header: {
+    borderBottomWidth: 0.5,
+    borderBottomColor: COLORS.primary,
+  }
 })

@@ -8,9 +8,10 @@ export default function Layout() {
     <>
     <StatusBar backgroundColor="#fff" barStyle="dark-content"/>
       <Stack>
+        <Stack.Screen name="WelcomeScreen" options={{ headerShown: false}} />
         <Stack.Screen name="index" options={{ title: 'Books' }} />
-        <Stack.Screen name="Chapters" options={{ headerShown: false }} />
-        <Stack.Screen name="Verses" options={{ headerShown: false }} />
+        <Stack.Screen name="Chapters" options={{ headerShown: true }} />
+        <Stack.Screen name="Verses" options={{ headerShown: true }} />
       </Stack>
     </>
   );

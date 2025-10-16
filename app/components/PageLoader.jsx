@@ -1,10 +1,19 @@
 import COLORS from '@/configs/colors';
-import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
+import LottieView from 'lottie-react-native';
+import { StyleSheet, Text, View } from 'react-native';
 export default function PageLoader({ loading }) {
     return (
         <>
             {loading ? (<View style={styles.container}>
-                <ActivityIndicator animating={loading} size={30} color={COLORS.primary} />
+               
+                    <LottieView
+                        source={require('../../assets/animations/Document.json')}
+                        autoPlay
+                        loop
+                        speed={1}
+                        style={{ width: 100, height: 100 }}
+                    />
+                {/* <ActivityIndicator animating={loading} size={30} color={COLORS.primary} /> */}
                 <Text style={styles.loderText}>Loding...</Text>
             </View>) : null}
         </>

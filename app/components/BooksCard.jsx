@@ -1,25 +1,30 @@
 import COLORS from "@/configs/colors";
+import * as Haptics from 'expo-haptics';
 import { Image } from "expo-image";
 import { router } from "expo-router";
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-
-const apiUrl = "http://10.196.153.165:3000";
 
 const BooksCard = ({ item }) => {
 
     return (
         <TouchableOpacity style={styles.item}
             activeOpacity={0.8}
-            onPress={() => router.push({
-                pathname: '/Chapters',
-                params: { ...item }
-            })}
+            onPress={() => {
+                Haptics.notificationAsync(
+                    Haptics.NotificationFeedbackType.Success
+                )
+                router.push({
+                    pathname: '/Chapters',
+                    params: { ...item }
+                })
+            }
+            }
         >
             <View style={styles.card}>
                 {/* Left: Image + Title */}
                 <View style={styles.leftContainer}>
                     <Image
-                        source={{ uri: `${apiUrl}/${item.image}` }}
+                        source={{ uri: `${item.image}` }}
                         style={styles.image}
                         contentFit="cover"
                     />

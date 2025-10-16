@@ -1,10 +1,9 @@
 import COLORS from '@/configs/colors';
 import { FontAwesome6 } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
-import { Image } from 'expo-image';
-import { router } from "expo-router";
 import { useState } from 'react';
 import { LayoutAnimation, Platform, StyleSheet, Text, TouchableOpacity, UIManager, View } from 'react-native';
+import AudioPlayer from './AudioPlayer';
 
 // Enable LayoutAnimation on Android
 if (Platform.OS === 'android') {
@@ -13,20 +12,8 @@ if (Platform.OS === 'android') {
     }
 }
 
-const ChaptersCard = (item) => {
-    const {
-        name,
-        chapter_number,
-        chapter_summary,
-        image_name,
-        name_translation,
-        name_meaning,
-        name_transliterated,
-        verses_count,
-        chapter_summary_hindi
-    } = item.item;
-    const info = item.item;
-
+const ChaptersCard = ({ item }) => {
+    const { audio_url, chapter_number, verse_number, title, text, transliteration, word_meanings } = item;
     const [expanded, setExpanded] = useState(false);
 
     const toggleExpand = () => {
@@ -37,18 +24,16 @@ const ChaptersCard = (item) => {
     };
 
     return (
-        <TouchableOpacity onPress={toggleExpand} activeOpacity={0.9}>
+        <TouchableOpacity onPress={toggleExpand} activeOpacity={0.98}>
             <View style={styles.card}>
-                <Image
-                    source={{ uri: image_name }}
-                    style={styles.image}
-                    contentFit="cover"
-                />
-                <Text style={styles.subtitle}>Chapter {chapter_number}</Text>
+                {/* <Text style={styles.title}>{title}</Text> */}
+                <View style={[styles.titleText]}>
+                    <Text style={styles.text}>{text}</Text>
+                </View>
                 <View style={[styles.expansion]}>
                     <View>
-                        <Text style={styles.title}>{name_translation}</Text>
-                        <Text style={styles.subtitle}>{name}</Text>
+
+                        <Text style={styles.subtitle}>{title}</Text>
                     </View>
                     <View style={[{ paddingRight: 15 }]}>
                         {
@@ -59,33 +44,12 @@ const ChaptersCard = (item) => {
                 </View>
                 {expanded && (
                     <TouchableOpacity activeOpacity={1} style={styles.expandedSection}>
-                        <Text style={[styles.detailTextHeading]}>Verses : </Text>
-                        <Text style={[styles.detailText, { paddingHorizontal: 5 }]}>{verses_count}</Text>
-                        <Text style={styles.detailTextHeading}>Transliterate : </Text>
-                        <Text style={[styles.detailText, { paddingHorizontal: 5 }]}>{name_transliterated}</Text>
-                        <Text style={[styles.detailTextHeading, {}]}>Meaning : </Text>
-                        <Text style={[styles.detailText, { paddingHorizontal: 5 }]}>{name_meaning}</Text>
-                        <Text style={[styles.summaryTitle]}>Summary (English)</Text>
-                        <Text style={[styles.detailText, { paddingHorizontal: 5 }]}>{chapter_summary}</Text>
+                        <Text style={[styles.detailTextHeading]}>Transliteration : </Text>
+                        <Text style={[styles.detailText, { paddingHorizontal: 5 }]}>{transliteration}</Text>
+                        <Text style={[styles.detailTextHeading]}>Meaning : </Text>
+                        <Text style={[styles.detailText, { paddingHorizontal: 5 }]}>{word_meanings}</Text>
+                        <AudioPlayer uri={audio_url} />
 
-                        <Text style={[styles.summaryTitle]}>सारांश (Hindi)</Text>
-                        <Text style={[styles.detailText, { paddingHorizontal: 5 }]}>{chapter_summary_hindi}</Text>
-                        <TouchableOpacity
-                            onPress={() => {
-                                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Rigid)
-                                router.push({
-                                    pathname: '/Verses',
-                                    params: { ...info }
-                                })
-                            }
-                            }
-                            activeOpacity={0.8}
-                            style={[styles.readButton, { marginTop: 10 }]}>
-                            <View style={[{ flexDirection: 'row', justifyContent: "space-between", alignItems: "center", paddingHorizontal: 15 }]}>
-                                <Text style={[styles.readButtonText]}>Read</Text>
-                                <FontAwesome6 name="circle-chevron-right" size={22} color={COLORS.backgroundLight} />
-                            </View>
-                        </TouchableOpacity>
                     </TouchableOpacity>
                 )}
             </View>
@@ -117,7 +81,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         color: COLORS.textSecondary,
-        maxWidth: '90%'
+        maxWidth: '100%'
     },
     subtitle: {
         fontSize: 16,
@@ -129,7 +93,7 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.backgroundLight,
         padding: 12,
         borderRadius: 10,
-        elevation:1
+        elevation: 1
     },
     detailTextHeading: {
         fontSize: 14,
@@ -141,7 +105,6 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: COLORS.textPrimary,
         marginBottom: 6,
-        textAlign: "auto"
     },
     summaryTitle: {
         fontSize: 15,
@@ -154,19 +117,33 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        marginTop: 10,
+        marginTop: 10
     },
     readButton: {
         backgroundColor: COLORS.primary,
         padding: 10,
         borderRadius: 5,
         width: '100%',
-        marginTop: 10,
-        elevation:2
+        marginTop: 10
     },
     readButtonText: {
         color: COLORS.backgroundLight,
-        fontWeight: 'bold',
+        fontWeight: 'bold'
+    },
+    text: {
+        fontSize: 17,
+        textAlign: "justify",
+        color: COLORS.textPrimary,
+        marginTop: 10,
+        fontWeight: '600'
+    },
+    titleText: {
+        backgroundColor: COLORS.backgroundLight,
+        padding: 5,
+        borderRadius: 10,
+        marginTop: 10,
+        marginBottom: 10,
+        elevation: 1
     }
 
 });

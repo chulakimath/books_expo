@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
-import apiUrl from "../configs/api";
+import { apiUrl } from "../configs/api";
 import COLORS from "../configs/colors.js";
 import BooksCard from "./components/BooksCard";
+import PageLoader from "./components/PageLoader";
+
 
 export default function Index() {
- 
+
   const [loader, setLoader] = useState(false)
   const [books, setBooks] = useState([]);
   const getBooks = async () => {
@@ -37,15 +39,16 @@ export default function Index() {
 
   return (
     <View style={styles.container}>
-      {/* <PageLoader loading={loader} /> */}
+      <PageLoader loading={loader} />
+      
       <FlatList
         data={books}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => <BooksCard item={item} />}
         style={styles.list}
         showsVerticalScrollIndicator={false}
-        refreshing={loader}
-        onRefresh={getBooks}
+        // refreshing={loader}
+        // onRefresh={getBooks}
         ListEmptyComponent={<Text style={styles.empty}>No books available</Text>}
       />
     </View>
@@ -73,5 +76,6 @@ const styles = StyleSheet.create({
   loderText: {
     color: COLORS.textSecondary,
     textAlign: "center"
-  }
+  },
+  
 });
