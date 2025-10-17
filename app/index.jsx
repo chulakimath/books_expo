@@ -1,6 +1,7 @@
 import COLORS from '@/configs/colors';
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { router } from 'expo-router';
 import LottieView from 'lottie-react-native';
 import { useEffect, useRef } from 'react';
 import {
@@ -20,10 +21,12 @@ const WelcomeScreen = () => {
     animationRef.current?.play();
   }, []);
 
-  const handleAnimationPress = () => {
-    animationRef.current?.reset();
-    animationRef.current?.play();
-  };
+ 
+    useEffect(() => {
+    setTimeout(() => {
+      router.replace('Books');
+    }, 5000)
+  }, [])
 
   const handleNext = () => {
     navigation.navigate('Books');

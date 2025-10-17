@@ -1,9 +1,11 @@
+import COLORS from '@/configs/colors';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import Slider from '@react-native-community/slider';
 import { useAudioPlayer, useAudioPlayerStatus } from 'expo-audio';
 import LottieView from 'lottie-react-native';
 import { useEffect, useRef } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
+
 
 
 export default function AudioPlayer({ uri }) {
@@ -82,9 +84,9 @@ export default function AudioPlayer({ uri }) {
         <TouchableOpacity
           disabled={!isReady}
           onPress={handlePlayPause} activeOpacity={0.95} style={{ marginTop: 20 }}>
-          {!isReady && <SimpleLineIcons name='hourglass' size={30} color={"#000"} />}
-          {isReady && !isPlaying && <SimpleLineIcons name='control-play' size={30} color={"#000"} />}
-          {isReady && isPlaying && <SimpleLineIcons name='control-pause' size={30} color={"#000"} />}
+          {!isReady && <SimpleLineIcons name='hourglass' size={30} color={COLORS.primary} />}
+          {isReady && !isPlaying && <SimpleLineIcons name='control-play' size={30} color={COLORS.primary} />}
+          {isReady && isPlaying && <SimpleLineIcons name='control-pause' size={30} color={COLORS.primary} />}
         </TouchableOpacity>
         <Slider
           style={{ marginTop: 20, width: '100%', height: 40 }}
@@ -92,9 +94,9 @@ export default function AudioPlayer({ uri }) {
           maximumValue={status?.duration ?? 0}
           value={status?.currentTime ?? 0}
           onSlidingComplete={handleSeekComplete}
-          minimumTrackTintColor="#1EB1FC"
-          maximumTrackTintColor="#8E8E93"
-          thumbTintColor="#1EB1FC"
+          minimumTrackTintColor={COLORS.textSecondary}
+          maximumTrackTintColor={COLORS.secondary}
+          thumbTintColor={COLORS.primary}
           disabled={!isReady}
         />
       </View>

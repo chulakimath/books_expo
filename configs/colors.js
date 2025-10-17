@@ -215,10 +215,6 @@ const NeonGlowTheme = {
     },
 };
 
-
-
-
-
 export const Themes = {
     LightTheme,
     DarkTheme,
@@ -233,8 +229,6 @@ export const Themes = {
     NeonTheme,
     CyberTheme,
     NeonGlowTheme
-
-
 };
 
 const COLORS = ForestTheme;
