@@ -1,17 +1,19 @@
-import { Ionicons } from '@expo/vector-icons';
-import { Stack, router } from 'expo-router';
-import { useContext } from 'react';
-import { ActivityIndicator, StatusBar, TouchableOpacity, View } from 'react-native';
-import ThemeProvider, { ThemeContext } from '../configs/Context';
-
+import { Ionicons } from "@expo/vector-icons";
+import { Stack, router } from "expo-router";
+import { useContext } from "react";
+import {
+  ActivityIndicator,
+  StatusBar,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import ThemeProvider, { ThemeContext } from "../configs/Context";
 
 function ThemedLayout() {
   const { theme } = useContext(ThemeContext);
-
-
   if (!theme) {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <ActivityIndicator size="large" />
       </View>
     );
@@ -19,20 +21,24 @@ function ThemedLayout() {
 
   return (
     <>
-      <StatusBar backgroundColor={theme.background} barStyle={theme.barStyle || "dark-content"} />
+      <StatusBar
+        backgroundColor={theme.background}
+        barStyle={theme.barStyle || "dark-content"}
+      />
       <Stack>
         <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen
           name="Books"
           options={{
             headerStyle: { backgroundColor: theme.background },
+            headerTintColor: theme.textPrimary,
             headerRight: () => {
               return (
                 <TouchableOpacity
-                  onPress={() => router.push('/Settings')}
+                  onPress={() => router.push("/Settings")}
                   style={{ marginRight: 15 }}
                 >
-                <Ionicons name="settings" size={24} color={theme.primary} />
+                  <Ionicons name="settings" size={24} color={theme.primary} />
                 </TouchableOpacity>
               );
             },
@@ -41,18 +47,21 @@ function ThemedLayout() {
         <Stack.Screen
           name="Chapters"
           options={{
+            headerTintColor: theme.textPrimary,
             headerStyle: { backgroundColor: theme.background },
           }}
         />
         <Stack.Screen
           name="Verses"
           options={{
+            headerTintColor: theme.textPrimary,
             headerStyle: { backgroundColor: theme.background },
           }}
         />
         <Stack.Screen
           name="Settings"
           options={{
+            headerTintColor: theme.textPrimary,
             headerStyle: { backgroundColor: theme.background },
           }}
         />
@@ -68,4 +77,3 @@ export default function Layout() {
     </ThemeProvider>
   );
 }
-
