@@ -1,10 +1,15 @@
-import COLORS from "@/configs/colors";
 import * as Haptics from 'expo-haptics';
 import { Image } from "expo-image";
 import { router } from "expo-router";
+import { useContext } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ThemeContext } from "../../configs/Context";
+
 
 const BooksCard = ({ item }) => {
+    const { theme } = useContext(ThemeContext);
+    const styles = getTheme(theme)
+
 
     return (
         <TouchableOpacity style={styles.item}
@@ -45,7 +50,7 @@ const BooksCard = ({ item }) => {
 };
 
 export default BooksCard;
-const styles = StyleSheet.create({
+const getTheme = (COLORS)=>StyleSheet.create({
     item: {
         marginBottom: 10,
         paddingHorizontal: 10,

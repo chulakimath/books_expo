@@ -1,35 +1,36 @@
-import COLORS from '@/configs/colors';
-import { AntDesign } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+
+import { ThemeContext } from '@/configs/Context';
+// import { AntDesign } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import LottieView from 'lottie-react-native';
-import { useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef } from 'react';
+
 import {
   Image,
   StyleSheet,
   Text,
-  TouchableOpacity,
-  View
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const WelcomeScreen = () => {
-  const navigation = useNavigation();
+  const { theme } = useContext(ThemeContext);
+  const styles=getTheme(theme)
+
   const animationRef = useRef(null);
 
   useEffect(() => {
     animationRef.current?.play();
   }, []);
 
- 
-    useEffect(() => {
+
+  useEffect(() => {
     setTimeout(() => {
       router.replace('Books');
     }, 5000)
   }, [])
 
   const handleNext = () => {
-    navigation.navigate('Books');
+    router.replace('Books');
   };
 
   return (
@@ -57,17 +58,17 @@ const WelcomeScreen = () => {
 
 
 
-      <View style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
+      {/* <View style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
         <TouchableOpacity onPress={handleNext} style={styles.iconContainer}>
           <AntDesign name="right" size={32} color="#000" />
         </TouchableOpacity>
-      </View>
+      </View> */}
     </SafeAreaView>
   );
 };
 
 export default WelcomeScreen;
-const styles = StyleSheet.create({
+const getTheme = (COLORS) => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.background,

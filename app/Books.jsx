@@ -1,13 +1,15 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import { apiUrl } from "../configs/api";
-import COLORS from "../configs/colors.js";
+import { ThemeContext } from "../configs/Context";
 import BooksCard from "./components/BooksCard";
 import PageLoader from "./components/PageLoader";
 
 
 export default function Index() {
-
+  const {theme} = useContext(ThemeContext)
+  const styles = getTheme(theme)
+  
   const [loader, setLoader] = useState(false)
   const [books, setBooks] = useState([]);
   const getBooks = async () => {
@@ -54,7 +56,7 @@ export default function Index() {
     </View>
   );
 }
-const styles = StyleSheet.create({
+const getTheme = (COLORS)=>StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,

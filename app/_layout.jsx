@@ -1,26 +1,71 @@
+import { Ionicons } from '@expo/vector-icons';
+import { Stack, router } from 'expo-router';
+import { useContext } from 'react';
+import { ActivityIndicator, StatusBar, TouchableOpacity, View } from 'react-native';
+import ThemeProvider, { ThemeContext } from '../configs/Context';
 
-import COLORS from '@/configs/colors';
-import { Stack } from 'expo-router';
-import { StatusBar } from 'react-native';
+
+function ThemedLayout() {
+  const { theme } = useContext(ThemeContext);
 
 
-export default function Layout() {
+  if (!theme) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
+
   return (
     <>
-      <StatusBar backgroundColor={COLORS.primary} barStyle="dark-content" />
+      <StatusBar backgroundColor={theme.background} barStyle={theme.barStyle || "dark-content"} />
       <Stack>
-        {/* <Stack.Screen name="WelcomeScreen" options={{ headerShown: false }} /> */}
         <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Screen name="Books" options={{
-          headerStyle: { backgroundColor: COLORS.background },
-        }} />
-        <Stack.Screen name="Chapters" options={{
-          headerStyle: { backgroundColor: COLORS.background },
-        }} />
-        <Stack.Screen name="Verses" options={{
-          headerStyle: { backgroundColor: COLORS.background },
-        }} />
+        <Stack.Screen
+          name="Books"
+          options={{
+            headerStyle: { backgroundColor: theme.background },
+            headerRight: () => {
+              return (
+                <TouchableOpacity
+                  onPress={() => router.push('/Settings')}
+                  style={{ marginRight: 15 }}
+                >
+                <Ionicons name="settings" size={24} color={theme.primary} />
+                </TouchableOpacity>
+              );
+            },
+          }}
+        />
+        <Stack.Screen
+          name="Chapters"
+          options={{
+            headerStyle: { backgroundColor: theme.background },
+          }}
+        />
+        <Stack.Screen
+          name="Verses"
+          options={{
+            headerStyle: { backgroundColor: theme.background },
+          }}
+        />
+        <Stack.Screen
+          name="Settings"
+          options={{
+            headerStyle: { backgroundColor: theme.background },
+          }}
+        />
       </Stack>
     </>
   );
 }
+
+export default function Layout() {
+  return (
+    <ThemeProvider>
+      <ThemedLayout />
+    </ThemeProvider>
+  );
+}
+

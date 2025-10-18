@@ -1,19 +1,15 @@
-import COLORS from '@/configs/colors';
 import { FontAwesome6 } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 import { Image } from 'expo-image';
 import { router } from "expo-router";
-import { useState } from 'react';
-import { LayoutAnimation, Platform, StyleSheet, Text, TouchableOpacity, UIManager, View } from 'react-native';
-
-// Enable LayoutAnimation on Android
-if (Platform.OS === 'android') {
-    if (UIManager.setLayoutAnimationEnabledExperimental) {
-        UIManager.setLayoutAnimationEnabledExperimental(true);
-    }
-}
+import { useContext, useState } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ThemeContext } from '../../configs/Context';
 
 const ChaptersCard = (item) => {
+    const { theme } = useContext(ThemeContext);
+    const styles = getTheme(theme)
+
     const {
         name,
         chapter_number,
@@ -30,11 +26,10 @@ const ChaptersCard = (item) => {
     const [expanded, setExpanded] = useState(false);
 
     const toggleExpand = () => {
-        // LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-        LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Rigid)
         setExpanded(!expanded);
     };
+
 
     return (
         <TouchableOpacity onPress={toggleExpand} activeOpacity={0.9}>
@@ -52,8 +47,8 @@ const ChaptersCard = (item) => {
                     </View>
                     <View style={[{ paddingRight: 15 }]}>
                         {
-                            expanded ? <FontAwesome6 name="angle-up" size={22} color={COLORS.primary} /> :
-                                <FontAwesome6 name="angle-down" size={22} color={COLORS.primary} />
+                            expanded ? <FontAwesome6 name="angle-up" size={22} color={theme.primary} /> :
+                                <FontAwesome6 name="angle-down" size={22} color={theme.primary} />
                         }
                     </View>
                 </View>
@@ -83,7 +78,7 @@ const ChaptersCard = (item) => {
                             style={[styles.readButton, { marginTop: 10 }]}>
                             <View style={[{ flexDirection: 'row', justifyContent: "space-between", alignItems: "center", paddingHorizontal: 15 }]}>
                                 <Text style={[styles.readButtonText]}>Read</Text>
-                                <FontAwesome6 name="circle-chevron-right" size={22} color={COLORS.backgroundLight} />
+                                <FontAwesome6 name="circle-chevron-right" size={22} color={theme.backgroundLight} />
                             </View>
                         </TouchableOpacity>
                     </TouchableOpacity>
@@ -95,7 +90,7 @@ const ChaptersCard = (item) => {
 
 export default ChaptersCard;
 
-const styles = StyleSheet.create({
+const getTheme = (COLORS)=>StyleSheet.create({
     card: {
         backgroundColor: COLORS.background,
         borderRadius: 10,

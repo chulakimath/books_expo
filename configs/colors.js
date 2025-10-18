@@ -231,6 +231,6 @@ export const Themes = {
     NeonGlowTheme
 };
 
-const COLORS = ForestTheme;
+const COLORS = DarkTheme; 
 
 export default COLORS;

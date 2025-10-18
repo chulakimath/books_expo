@@ -1,24 +1,20 @@
-import COLORS from '@/configs/colors';
+
 import { FontAwesome6 } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
-import { useState } from 'react';
-import { LayoutAnimation, Platform, StyleSheet, Text, TouchableOpacity, UIManager, View } from 'react-native';
+import { useContext, useState } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ThemeContext } from '../../configs/Context';
 import AudioPlayer from './AudioPlayer';
 
-// Enable LayoutAnimation on Android
-if (Platform.OS === 'android') {
-    if (UIManager.setLayoutAnimationEnabledExperimental) {
-        UIManager.setLayoutAnimationEnabledExperimental(true);
-    }
-}
 
 const ChaptersCard = ({ item }) => {
+    const { theme } = useContext(ThemeContext);
+    const styles = getTheme(theme)
+
     const { audio_url, chapter_number, verse_number, title, text, transliteration, word_meanings } = item;
     const [expanded, setExpanded] = useState(false);
 
     const toggleExpand = () => {
-        // LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-        LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Rigid)
         setExpanded(!expanded);
     };
@@ -37,8 +33,8 @@ const ChaptersCard = ({ item }) => {
                     </View>
                     <View style={[{ paddingRight: 15 }]}>
                         {
-                            expanded ? <FontAwesome6 name="angle-up" size={22} color={COLORS.primary} /> :
-                                <FontAwesome6 name="angle-down" size={22} color={COLORS.primary} />
+                            expanded ? <FontAwesome6 name="angle-up" size={22} color={theme.primary} /> :
+                                <FontAwesome6 name="angle-down" size={22} color={theme.primary} />
                         }
                     </View>
                 </View>
@@ -59,7 +55,7 @@ const ChaptersCard = ({ item }) => {
 
 export default ChaptersCard;
 
-const styles = StyleSheet.create({
+const getTheme = (COLORS)=>StyleSheet.create({
     card: {
         backgroundColor: COLORS.background,
         borderRadius: 10,

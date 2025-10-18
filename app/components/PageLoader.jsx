@@ -1,7 +1,10 @@
-import COLORS from '@/configs/colors';
 import LottieView from 'lottie-react-native';
+import { useContext } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { ThemeContext } from '../../configs/Context';
 export default function PageLoader({ loading }) {
+    const {theme}=useContext(ThemeContext)
+    const styles = getTheme(theme)
     return (
         <>
             {loading ? (<View style={styles.container}>
@@ -20,7 +23,7 @@ export default function PageLoader({ loading }) {
     )
 }
 
-const styles = StyleSheet.create({
+const getTheme = (COLORS)=>StyleSheet.create({
     container: {
         position: "absolute",
         top: 0,

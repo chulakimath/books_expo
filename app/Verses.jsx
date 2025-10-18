@@ -1,14 +1,18 @@
 import { useLocalSearchParams as UseLocalSearchParams } from 'expo-router';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 import { apiUrl } from '../configs/api';
-import COLORS from '../configs/colors';
+import { ThemeContext } from '../configs/Context';
 import PageLoader from './components/PageLoader';
 import VersesCard from './components/VersesCard';
 
 
 
+
 const Verses = () => {
+    const { theme } = useContext(ThemeContext);
+    const styles = getTheme(theme)
+
     const params = UseLocalSearchParams();
     const { book_id, chapter_number, name_translation, name } = params;
     const [verses, setVerse] = useState([]);
@@ -56,7 +60,7 @@ const Verses = () => {
 
 export default Verses
 
-const styles = StyleSheet.create({
+const getTheme = (COLORS) => StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: COLORS.background,
@@ -83,7 +87,7 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     header: {
-        borderBottomWidth:0.5,
-        borderBottomColor:COLORS.primary,
+        borderBottomWidth: 0.5,
+        borderBottomColor: COLORS.primary,
     }
 })

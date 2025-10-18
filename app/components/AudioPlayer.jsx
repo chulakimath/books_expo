@@ -1,14 +1,15 @@
-import COLORS from '@/configs/colors';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import Slider from '@react-native-community/slider';
 import { useAudioPlayer, useAudioPlayerStatus } from 'expo-audio';
 import LottieView from 'lottie-react-native';
-import { useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
-
+import { ThemeContext } from '../../configs/Context';
 
 
 export default function AudioPlayer({ uri }) {
+  const { theme } = useContext(ThemeContext);
+  const COLORS=theme;
   const player = useAudioPlayer(uri);
   const status = useAudioPlayerStatus(player);
   const visualiserRef = useRef(null)
@@ -94,8 +95,8 @@ export default function AudioPlayer({ uri }) {
           maximumValue={status?.duration ?? 0}
           value={status?.currentTime ?? 0}
           onSlidingComplete={handleSeekComplete}
-          minimumTrackTintColor={COLORS.textSecondary}
-          maximumTrackTintColor={COLORS.secondary}
+          minimumTrackTintColor={COLORS.secondary}
+          maximumTrackTintColor={COLORS.textSecondary}
           thumbTintColor={COLORS.primary}
           disabled={!isReady}
         />

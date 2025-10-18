@@ -1,11 +1,15 @@
-import COLORS from '@/configs/colors';
+import { ThemeContext } from '@/configs/Context';
 import { useLocalSearchParams as UseLocalSearchParams } from 'expo-router';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 import { apiUrl } from '../configs/api';
 import ChaptersCard from "./components/ChaptersCard";
 import PageLoader from "./components/PageLoader";
 const Chapters = () => {
+  const { theme,toggleTheme} = useContext(ThemeContext);
+  const styles = getTheme(theme)
+ 
+
   const params = UseLocalSearchParams();
   const { id } = params;
   const [chapters, setChapters] = useState([])
@@ -65,7 +69,7 @@ const Chapters = () => {
 
 export default Chapters
 
-const styles = StyleSheet.create({
+const getTheme = (COLORS) => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.background,
