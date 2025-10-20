@@ -12,6 +12,7 @@ const LightTheme = {
   error: "#EF4444",
   overlay: "rgba(0, 0, 0, 0.1)",
   transparent: "transparent",
+  statusBarStyle: "dark-content",
 };
 const DarkTheme = {
   name: "dark",
@@ -27,6 +28,7 @@ const DarkTheme = {
   error: "#F87171",
   overlay: "rgba(255, 255, 255, 0.05)",
   transparent: "transparent",
+  statusBarStyle: "light-content",
 };
 const FunTheme = {
   name: "fun",
@@ -42,6 +44,7 @@ const FunTheme = {
   error: "#FF6B6B",
   overlay: "rgba(0, 0, 0, 0.2)",
   transparent: "transparent",
+  statusBarStyle: "dark-content",
 };
 const PastelTheme = {
   name: "pastel",
@@ -57,6 +60,7 @@ const PastelTheme = {
   error: "#FCA5A5",
   overlay: "rgba(0, 0, 0, 0.05)",
   transparent: "transparent",
+  statusBarStyle: "dark-content",
 };
 const FrostTheme = {
   name: "frost",
@@ -72,6 +76,7 @@ const FrostTheme = {
   error: "#F87171",
   overlay: "rgba(0, 0, 0, 0.08)",
   transparent: "transparent",
+  statusBarStyle: "dark-content",
 };
 const EarthTheme = {
   name: "earth",
@@ -87,6 +92,7 @@ const EarthTheme = {
   error: "#E53E3E",
   overlay: "rgba(0, 0, 0, 0.15)",
   transparent: "transparent",
+  statusBarStyle: "dark-content",
 };
 const SunsetTheme = {
   name: "sunset",
@@ -102,6 +108,7 @@ const SunsetTheme = {
   error: "#E57373",
   overlay: "rgba(0, 0, 0, 0.1)",
   transparent: "transparent",
+  statusBarStyle: "dark-content",
 };
 const MidnightTheme = {
   name: "midnight",
@@ -117,6 +124,7 @@ const MidnightTheme = {
   error: "#EF4444",
   overlay: "rgba(255, 255, 255, 0.05)",
   transparent: "transparent",
+  statusBarStyle: "light-content",
 };
 const ForestTheme = {
   name: "forest",
@@ -132,6 +140,7 @@ const ForestTheme = {
   error: "#E57373",
   overlay: "rgba(0, 0, 0, 0.1)",
   transparent: "transparent",
+  statusBarStyle: "dark-content",
 };
 const BloomTheme = {
   name: "bloom",
@@ -147,6 +156,7 @@ const BloomTheme = {
   error: "#F87171",
   overlay: "rgba(0, 0, 0, 0.05)",
   transparent: "transparent",
+  statusBarStyle: "dark-content",
 };
 
 const VintageTheme = {
@@ -163,6 +173,7 @@ const VintageTheme = {
   error: "#E57373",
   overlay: "rgba(0, 0, 0, 0.08)",
   transparent: "transparent",
+  statusBarStyle: "dark-content",
 };
 const NeonTheme = {
   name: "neon",
@@ -178,6 +189,7 @@ const NeonTheme = {
   error: "#FF073A", // Bright Red
   overlay: "rgba(255, 255, 255, 0.08)",
   transparent: "transparent",
+  statusBarStyle: "light-content",
 };
 const CyberTheme = {
   name: "cyber",
@@ -193,6 +205,7 @@ const CyberTheme = {
   error: "#EF4444",
   overlay: "rgba(255, 255, 255, 0.08)",
   transparent: "transparent",
+  statusBarStyle: "light-content",
 };
 
 const NeonGlowTheme = {
@@ -209,6 +222,7 @@ const NeonGlowTheme = {
   error: "#FF073A",
   overlay: "rgba(255, 255, 255, 0.1)",
   transparent: "transparent",
+  statusBarStyle: "light-content",
   glow: {
     primary: "0 0 10px #0FF, 0 0 20px #0FF",
     secondary: "0 0 10px #F0F, 0 0 20px #F0F",

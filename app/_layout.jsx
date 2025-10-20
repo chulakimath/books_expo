@@ -23,7 +23,7 @@ function ThemedLayout() {
     <>
       <StatusBar
         backgroundColor={theme.background}
-        barStyle={theme.barStyle || "dark-content"}
+        barStyle={theme.statusBarStyle}
       />
       <Stack>
         <Stack.Screen name="index" options={{ headerShown: false }} />
