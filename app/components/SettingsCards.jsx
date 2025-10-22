@@ -5,7 +5,6 @@ import { ThemeContext } from "../../configs/Context";
 const SettingsCard = ({ children, title }) => {
   const { theme } = useContext(ThemeContext);
   const styles = getTheme(theme);
-
   return (
     <View style={[styles.card]}>
       <Text style={[styles.title]}>{title}</Text>

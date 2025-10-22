@@ -1,68 +1,98 @@
-import { ThemeContext } from "@/configs/Context";
-// import { AntDesign } from '@expo/vector-icons';
-import { router } from "expo-router";
-import LottieView from "lottie-react-native";
-import { useContext, useEffect, useRef } from "react";
-
-import { Image, StyleSheet, Text } from "react-native";
+import { useEffect, useContext, useRef } from "react";
+import { StyleSheet, Text, Animated } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { ThemeContext } from "@/configs/Context";
+import { router } from "expo-router";
+
+import * as SplashScreen from "expo-splash-screen";
 
 const WelcomeScreen = () => {
   const { theme } = useContext(ThemeContext);
   const styles = getTheme(theme);
-
   const animationRef = useRef(null);
-
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const slideFromRightAnime = useRef(new Animated.Value(10)).current;
+  const slideFromLeftAnime = useRef(new Animated.Value(-100)).current;
   useEffect(() => {
-    animationRef.current?.play();
+    const prepare = async () => {
+      await SplashScreen.preventAutoHideAsync();
+      animationRef.current?.play();
+      await SplashScreen.hideAsync();
+    };
+    prepare();
   }, []);
 
   useEffect(() => {
+    Animated.timing(slideFromRightAnime, {
+      toValue: 0,
+      duration: 1000,
+      useNativeDriver: true,
+    }).start();
+    Animated.parallel([
+      Animated.spring(slideFromLeftAnime, {
+        toValue: 0,
+        // duration: 1000,
+        friction: 7,
+        tension: 100,
+        useNativeDriver: true,
+      }),
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 2000,
+        useNativeDriver: true,
+      }),
+    ]).start();
     setTimeout(() => {
-      router.replace("Books");
-    }, 5000);
+      Animated.timing(fadeAnim, {
+        toValue: 0,
+        duration: 2000,
+        useNativeDriver: true,
+      }).start();
+    }, 2100);
   }, []);
 
-  const handleNext = () => {
-    router.replace("Books");
-  };
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      router.replace("Books");
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.welcome}>The Song Of God</Text>
-      <LottieView
-        ref={animationRef}
-        source={require("../assets/animations/Welcome.json")}
-        autoPlay={false}
-        loop={true}
-        speed={1.5}
-        style={styles.lottie}
-      />
+      <Animated.Text
+        style={[
+          styles.welcome,
+          { transform: [{ translateY: slideFromRightAnime }] },
+        ]}
+      >
+        The Song Of God
+      </Animated.Text>
 
-      <Image
+      <Animated.Image
         source={{
           uri: "https://hubvxtxffzxnaoiingqj.supabase.co/storage/v1/object/public/gita-images/gita.png",
         }}
-        style={styles.image}
+        style={[
+          styles.image,
+          { opacity: fadeAnim },
+          { transform: [{ translateX: slideFromLeftAnime }] },
+        ]}
         resizeMode="cover"
       />
-
-      {/* <View style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
-        <TouchableOpacity onPress={handleNext} style={styles.iconContainer}>
-          <AntDesign name="right" size={32} color="#000" />
-        </TouchableOpacity>
-      </View> */}
     </SafeAreaView>
   );
 };
 
 export default WelcomeScreen;
+
 const getTheme = (COLORS) =>
   StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: COLORS.background,
-      justifyContent: "space-between",
+      justifyContent: "flex-start",
+      gap: "10%",
       paddingVertical: 20,
       paddingHorizontal: 16,
     },
@@ -79,11 +109,7 @@ const getTheme = (COLORS) =>
       marginVertical: 16,
       color: COLORS.textPrimary,
     },
-    lottie: {
-      width: 300,
-      height: 100,
-      alignSelf: "center",
-    },
+
     iconContainer: {
       width: 50,
       height: 50,

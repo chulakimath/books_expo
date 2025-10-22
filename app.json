@@ -42,7 +42,8 @@
           "backgroundColor": "#ffffff",
           "dark": {
             "backgroundColor": "#000000"
-          }
+          },
+          "autoHide": false
         }
       ],
       "expo-audio"

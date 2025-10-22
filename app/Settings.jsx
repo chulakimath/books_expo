@@ -1,25 +1,36 @@
 import {
   StyleSheet,
   Text,
-  View,
   ScrollView,
   TouchableOpacity,
+  Animated,
 } from "react-native";
-import { useContext } from "react";
+import { useContext, useRef, useEffect } from "react";
 import { ThemeContext } from "../configs/Context";
 import SettingsCard from "./components/SettingsCards";
 import { ThemesKeys, Themes } from "../configs/colors";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useEffect } from "react";
 import { Ionicons } from "@expo/vector-icons";
+import * as Haptics from "expo-haptics";
 const Settings = () => {
   const { theme, toggleTheme, currentTheme } = useContext(ThemeContext);
 
   const styles = getTheme(theme);
   const handleThemeIconClick = (choosenTheme) => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Rigid);
     toggleTheme(choosenTheme);
   };
 
+  const animateRef = useRef(new Animated.Value(0)).current;
+  useEffect(() => {
+    animateRef.setValue(0);
+    Animated.timing(animateRef, {
+      // toValue: 1,
+      // duration: 1000,
+      toValue: 1,
+      friction: 5,
+      useNativeDriver: true,
+    }).start();
+  }, [currentTheme]);
   return (
     <ScrollView style={[styles.container]} showsVerticalScrollIndicator={false}>
       <SettingsCard title={"Choose Theme"}>
@@ -40,7 +51,9 @@ const Settings = () => {
                   styles.gridItem,
                   {
                     borderColor:
-                      themeName === currentTheme ? theme.success : "red",
+                      themeName === currentTheme
+                        ? theme.success
+                        : "transparent",
                   },
                 ]}
               >
@@ -53,12 +66,19 @@ const Settings = () => {
                   {themeName}
                 </Text>
                 {themeName === currentTheme && (
-                  <Ionicons
-                    name="checkmark-circle"
-                    size={24}
-                    color={theme.error}
-                    style={{ position: "absolute", top: 0, right: 0 }}
-                  />
+                  <Animated.View
+                    style={[
+                      { transform: [{ scale: animateRef }] },
+                      { position: "absolute", top: 0, left: 2 },
+                    ]}
+                  >
+                    <Ionicons
+                      name="checkmark-circle"
+                      size={24}
+                      color={theme.error}
+                      style={{}}
+                    />
+                  </Animated.View>
                 )}
               </TouchableOpacity>
             );

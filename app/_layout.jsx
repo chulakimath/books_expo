@@ -1,16 +1,43 @@
 import { Ionicons } from "@expo/vector-icons";
 import { Stack, router } from "expo-router";
-import { useContext } from "react";
+import { useContext, useEffect, useRef } from "react";
+import * as Haptics from "expo-haptics";
 import {
   ActivityIndicator,
   StatusBar,
   TouchableOpacity,
   View,
+  Animated,
 } from "react-native";
 import ThemeProvider, { ThemeContext } from "../configs/Context";
 
 function ThemedLayout() {
   const { theme } = useContext(ThemeContext);
+  const rotationRef = useRef(new Animated.Value(0)).current;
+  // useEffect(() => {
+  //   Animated.timing(rotationRef, {
+  //     toValue: 1,
+  //     duration: 1000,
+  //     useNativeDriver: true,
+  //   }).start();
+  // }, []);
+  const rotate = rotationRef.interpolate({
+    inputRange: [0, 1],
+    outputRange: ["0deg", "360deg"],
+  });
+
+  const handleSettingsClick = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Rigid);
+    rotationRef.setValue(0);
+    Animated.timing(rotationRef, {
+      toValue: 0.3,
+      duration: 300,
+      useNativeDriver: true,
+    }).start(() => {
+      // Navigate after animation ends
+      router.push("/Settings");
+    });
+  };
   if (!theme) {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
@@ -35,10 +62,12 @@ function ThemedLayout() {
             headerRight: () => {
               return (
                 <TouchableOpacity
-                  onPress={() => router.push("/Settings")}
+                  onPress={handleSettingsClick}
                   style={{ marginRight: 15 }}
                 >
-                  <Ionicons name="settings" size={24} color={theme.primary} />
+                  <Animated.View style={[{ transform: [{ rotate: rotate }] }]}>
+                    <Ionicons name="settings" size={24} color={theme.primary} />
+                  </Animated.View>
                 </TouchableOpacity>
               );
             },
